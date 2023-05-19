@@ -1,2 +1,3 @@
-# frog-tales
-Repository for the ADA (22/23) final team-project.
+# Hop'n'Brew: Amphibian Alchemy
+
+_work in progress_
