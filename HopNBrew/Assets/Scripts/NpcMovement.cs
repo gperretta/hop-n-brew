@@ -8,8 +8,10 @@ using UnityEngine;
 /// - move speed: how fast the prefabs will move (to the left)
 /// </summary>
 public class NpcMovement : MonoBehaviour
+
 {
     public float moveSpeed = 5;
+    public GameObject dialogueObject;
 
     void Update()
     {
@@ -27,6 +29,18 @@ public class NpcMovement : MonoBehaviour
         {
             moveSpeed = 0;
             Debug.Log("[DEBUG] Collision detected.");
+            spawnBox();
         }
+    }
+
+        void spawnBox()
+    {
+        // MISSING other components -> random sprite render? 
+
+        // Spawning the prefab (npc) in the spawn point (game object):
+        Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y, 0);
+
+        // To instantiate/clone the prefab:
+        Instantiate(dialogueObject, spawnPosition, transform.rotation);
     }
 }
