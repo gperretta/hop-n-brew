@@ -147,4 +147,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3
-  dialogueObject: {fileID: 8594658064444224651, guid: 7e81c1d442e3f4d4682457b2bfb8e7dd, type: 3}
+  dialogueObject: {fileID: 4687502419518449269, guid: 5e93aa4d783124a9293a7a9f61474e24, type: 3}
