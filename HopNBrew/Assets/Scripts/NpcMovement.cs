@@ -25,7 +25,7 @@ public class NpcMovement : MonoBehaviour
     // Stops the npc when it gets close to the shop:
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("stop"))
+        if (collision.gameObject.CompareTag("stopNpc"))
         {
             moveSpeed = 0;
             Debug.Log("[DEBUG] Collision detected.");

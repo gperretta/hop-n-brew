@@ -6,9 +6,9 @@ public class CollisionDetectionDraft : MonoBehaviour
 {
      void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("pot"))
+        if (collision.gameObject.CompareTag("ingredient"))
         {
-         Debug.Log("Collision detected");
+         Debug.Log("Just added: " + collision.gameObject.name);
         }
     }
 }
