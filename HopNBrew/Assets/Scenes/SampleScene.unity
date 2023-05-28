@@ -273,10 +273,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1778572717}
-  - {fileID: 2131978036}
   - {fileID: 1662338189}
-  - {fileID: 2035009550}
+  - {fileID: 2131978036}
   - {fileID: 1183478236}
+  - {fileID: 2035009550}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -510,9 +510,8 @@ GameObject:
   - component: {fileID: 1183478235}
   - component: {fileID: 1183478237}
   - component: {fileID: 1183478238}
-  - component: {fileID: 1183478240}
   m_Layer: 0
-  m_Name: GameObject (9)
+  m_Name: catnip
   m_TagString: ingredient
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -583,7 +582,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 478932001}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1183478237
 MonoBehaviour:
@@ -623,18 +622,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1183478240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1183478234}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8110523509c847db86ec97788c00c9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1294885711
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,9 +878,8 @@ GameObject:
   - component: {fileID: 1662338188}
   - component: {fileID: 1662338190}
   - component: {fileID: 1662338191}
-  - component: {fileID: 1662338193}
   m_Layer: 0
-  m_Name: GameObject (7)
+  m_Name: wicked apple
   m_TagString: ingredient
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -964,7 +950,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 478932001}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1662338190
 MonoBehaviour:
@@ -1004,18 +990,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1662338193
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1662338187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8110523509c847db86ec97788c00c9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1778572715
 GameObject:
   m_ObjectHideFlags: 0
@@ -1159,9 +1133,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1778572715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8110523509c847db86ec97788c00c9c, type: 3}
+  m_Script: {fileID: 11500000, guid: e6ce43f7538b14fc59ccdfa7fa548506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ingredientCounter: 2
 --- !u!1 &2035009548
 GameObject:
   m_ObjectHideFlags: 0
@@ -1174,9 +1149,8 @@ GameObject:
   - component: {fileID: 2035009549}
   - component: {fileID: 2035009551}
   - component: {fileID: 2035009552}
-  - component: {fileID: 2035009554}
   m_Layer: 0
-  m_Name: GameObject (8)
+  m_Name: dragon tooth
   m_TagString: ingredient
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1247,7 +1221,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 478932001}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2035009551
 MonoBehaviour:
@@ -1287,18 +1261,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &2035009554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2035009548}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8110523509c847db86ec97788c00c9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2131978034
 GameObject:
   m_ObjectHideFlags: 0
@@ -1312,7 +1274,7 @@ GameObject:
   - component: {fileID: 2131978037}
   - component: {fileID: 2131978038}
   m_Layer: 0
-  m_Name: GameObject (6)
+  m_Name: chicken tail
   m_TagString: ingredient
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1383,7 +1345,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 478932001}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2131978037
 MonoBehaviour:
