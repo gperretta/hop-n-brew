@@ -57,7 +57,13 @@ public class CraftingAction : MonoBehaviour
         // After the slots got filled
         if (ingredientCounter == ingredientKeys.Length)
         {
-            Debug.Log("Found " + getResult());
+            if (!getResult().Equals(" "))
+            {
+                Debug.Log("Found " + getResult());
+            } else
+            {
+                Debug.Log("Potion not found.");
+            } 
             checkResult();
             // To start the crafting action again
             ingredientCounter = 0;
@@ -74,7 +80,7 @@ public class CraftingAction : MonoBehaviour
         foreach (var ingredient in data.ingredients)
         {
             // Find the added ingredient in the ingredients dictionary
-            if (draggedIngredient == ingredient.Value)
+            if (draggedIngredient.Equals(ingredient.Value))
             {
                 // Find the associated key
                 ingredientKeys[ingredientCounter] = ingredient.Key;
@@ -96,7 +102,7 @@ public class CraftingAction : MonoBehaviour
         string combinedKeys = new string(ingredientKeys);
         foreach (var potion in data.potions)
         {
-            if (potion.Key == combinedKeys)
+            if (potion.Key.Equals(combinedKeys))
             {
                 result = potion.Value;
             }
