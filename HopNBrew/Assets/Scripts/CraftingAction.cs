@@ -12,17 +12,15 @@ public class CraftingAction : MonoBehaviour
     // Use the DataModel class, where the dictionaries are defined (ingredients and potions lists)
     private DataModel data;
     // To be set with the name of the ingredient that collides with the pot
-    private string ingredientAdded;
+    private string draggedIngredient;
     // Will contain the (dictionary) keys associated to the added ingredients
     private char[] ingredientKeys;
     // To check the number of slots filled
-    //FIXME: max = ingredientKeys lenght [TEST]
+    //max = ingredientKeys lenght 
     public int ingredientCounter;
-    // Flag to stop adding ingredients when a potion is found
-    //FIXME: [TEST]
-    // To be set with name of the potion found 
-    private bool isFound;
-    private string potionFound;
+    // To be set with the potion founded as a result for the crafting action
+    private string potionToServe;
+    private string potionToSave;
 
     /// <summary>
     /// Init variables; it runs when the game starts.
@@ -43,36 +41,26 @@ public class CraftingAction : MonoBehaviour
     /// <param name="collision">Collision2D gameObject component</param>
     void OnCollisionEnter2D(Collision2D collision)
     {
-        //FIXME: when a potion is found, the crafting actions stops [TEST]
+        // When the slots are not filled
         if (ingredientCounter < ingredientKeys.Length)
         {
             if (collision.gameObject.CompareTag("ingredient"))
             {
-                Debug.Log("counter " + ingredientCounter);
                 // Get the name of the gameObject involved in the collision event
-                ingredientAdded = collision.gameObject.name;
+                draggedIngredient = collision.gameObject.name;
                 // Perform crafting
-                getIngredientKey(ingredientAdded);
+                addIngredientKeys(draggedIngredient);
                 // Increase counter and move on the char array
                 ingredientCounter += 1;
             }
         }
-        //TODO: this should be a switch case (and maybe a separate check-result function)
+        // After the slots got filled
         if (ingredientCounter == ingredientKeys.Length)
         {
-            if (getResult() != " ")
-            {
-                potionFound = getResult();
-                Debug.Log("Found " + potionFound);
-                //TODO: SOMETHING ELSE HAPPENS
-                ingredientCounter = 0;
-            } else
-            {
-                Debug.Log("No potion found! Try again.");
-                //TODO: SOMETHING ELSE HAPPENS
-                //FIXME: Reset counter to try again [TEST]
-                ingredientCounter = 0;
-            }
+            Debug.Log("Found " + getResult());
+            checkResult();
+            // To start the crafting action again
+            ingredientCounter = 0;
         }
     }
 
@@ -80,15 +68,14 @@ public class CraftingAction : MonoBehaviour
     /// Get the ingredients key from the dictionary and put them in the ingredientKeys array
     /// </summary>
     /// <param name="ingredientName"></param>
-    void getIngredientKey(string ingredientName)
+    void addIngredientKeys(string ingredientName)
     {
-        Debug.Log("Just added: " + ingredientAdded);
+        Debug.Log("Just added: " + draggedIngredient);
         foreach (var ingredient in data.ingredients)
         {
             // Find the added ingredient in the ingredients dictionary
-            if (ingredientAdded == ingredient.Value)
+            if (draggedIngredient == ingredient.Value)
             {
-                Debug.Log(ingredient.Value + " is a correct ingredient!");
                 // Find the associated key
                 ingredientKeys[ingredientCounter] = ingredient.Key;
                 Debug.Log(ingredient.Value + " has key: " + ingredientKeys[ingredientCounter]);
@@ -103,17 +90,27 @@ public class CraftingAction : MonoBehaviour
     string getResult()
     {
         string result = " ";
-
+        // Sort the char array containing the ingredients keys
+        Array.Sort(ingredientKeys);
+        // Make the array into a new string for comparison
+        string combinedKeys = new string(ingredientKeys);
         foreach (var potion in data.potions)
         {
-            // Find a potion which key contains ingredients keys in the potions dictionary
-            if (potion.Key.Contains(ingredientKeys[0])
-                && potion.Key.Contains(ingredientKeys[1])
-                && potion.Key.Contains(ingredientKeys[2]))
+            if (potion.Key == combinedKeys)
             {
                 result = potion.Value;
             }
         }
         return result;
+    }
+
+    //TODO: 4-case scenario for crafting action result
+    void checkResult()
+    {
+        Debug.Log("Result check here...");
+        // IF ISNEW AND ISREQUESTED
+        // IF !ISNEW AND ISREQUESTED
+        // IF ISNEW AND !ISREQUESTED
+        // IF !ISNEW AND !ISREQUESTED
     }
 }
