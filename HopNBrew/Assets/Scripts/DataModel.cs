@@ -21,10 +21,10 @@ public class DataModel
     // Key type: string, Value type: string
     public Dictionary<string, string> potions = new Dictionary<string, string>()
     {
-        {"AD", "sleep potion"},
-        {"BC", "love potion"},
-        {"CE", "make-me-tall potion"},
-        {"EF", "make-me-small potion"}
+        {"ABD", "sleep potion"},
+        {"ABC", "love potion"},
+        {"ACD", "make-me-tall potion"},
+        {"ADE", "make-me-small potion"}
     };
 }
 

@@ -32,21 +32,19 @@ public class CraftingAction : MonoBehaviour
         // Call a zero-argument constructor for Crafting class
         data = new DataModel();
         // Set lenght (static array)
-        ingredientKeys = new char[2];
+        ingredientKeys = new char[3];
         // Reset counter
         ingredientCounter = 0;
-
-        isFound = false;
     }
 
     /// <summary>
     /// Detect collision between the pot gameObject and the ingredients gameObject 
     /// </summary>
-    /// <param name="collision"></param>
+    /// <param name="collision">Collision2D gameObject component</param>
     void OnCollisionEnter2D(Collision2D collision)
     {
         //FIXME: when a potion is found, the crafting actions stops [TEST]
-        if (!isFound && (ingredientCounter < ingredientKeys.Length))
+        if (ingredientCounter < ingredientKeys.Length)
         {
             if (collision.gameObject.CompareTag("ingredient"))
             {
@@ -67,12 +65,11 @@ public class CraftingAction : MonoBehaviour
                 potionFound = getResult();
                 Debug.Log("Found " + potionFound);
                 //TODO: SOMETHING ELSE HAPPENS
-                isFound = true;
+                ingredientCounter = 0;
             } else
             {
                 Debug.Log("No potion found! Try again.");
                 //TODO: SOMETHING ELSE HAPPENS
-                isFound = false;
                 //FIXME: Reset counter to try again [TEST]
                 ingredientCounter = 0;
             }
@@ -110,7 +107,9 @@ public class CraftingAction : MonoBehaviour
         foreach (var potion in data.potions)
         {
             // Find a potion which key contains ingredients keys in the potions dictionary
-            if (potion.Key.Contains(ingredientKeys[0]) && potion.Key.Contains(ingredientKeys[1]))
+            if (potion.Key.Contains(ingredientKeys[0])
+                && potion.Key.Contains(ingredientKeys[1])
+                && potion.Key.Contains(ingredientKeys[2]))
             {
                 result = potion.Value;
             }
