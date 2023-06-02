@@ -6,6 +6,8 @@ TagManager:
   tags:
   - ingredient
   - stopNpc
+  - orderContent
+  - npc
   layers:
   - Default
   - TransparentFX

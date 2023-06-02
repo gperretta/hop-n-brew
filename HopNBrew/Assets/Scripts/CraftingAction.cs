@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// - Attached to the pot gameObject
+/// - Attached to the Pot gameObject
 /// - It will run when an ingredient collides with the pot (when crafting action starts)
 /// </summary>
 public class CraftingAction : MonoBehaviour
@@ -15,12 +16,13 @@ public class CraftingAction : MonoBehaviour
     private string draggedIngredient;
     // Will contain the (dictionary) keys associated to the added ingredients
     private char[] ingredientKeys;
-    // To check the number of slots filled
-    //max = ingredientKeys lenght 
+    private const int slotNumber = 3;
     public int ingredientCounter;
     // To be set with the potion founded as a result for the crafting action
     private string potionToServe;
     private string potionToSave;
+    private string combinedKeys;
+    public TextMeshProUGUI orderText;
 
     /// <summary>
     /// Init variables; it runs when the game starts.
@@ -30,7 +32,7 @@ public class CraftingAction : MonoBehaviour
         // Call a zero-argument constructor for Crafting class
         data = new DataModel();
         // Set lenght (static array)
-        ingredientKeys = new char[3];
+        ingredientKeys = new char[slotNumber];
         // Reset counter
         ingredientCounter = 0;
     }
@@ -42,7 +44,7 @@ public class CraftingAction : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         // When the slots are not filled
-        if (ingredientCounter < ingredientKeys.Length)
+        if (ingredientCounter < slotNumber)
         {
             if (collision.gameObject.CompareTag("ingredient"))
             {
@@ -55,15 +57,8 @@ public class CraftingAction : MonoBehaviour
             }
         }
         // After the slots got filled
-        if (ingredientCounter == ingredientKeys.Length)
+        if (ingredientCounter == slotNumber)
         {
-            if (!getResult().Equals(" "))
-            {
-                Debug.Log("Found " + getResult());
-            } else
-            {
-                Debug.Log("Potion not found.");
-            } 
             checkResult();
             // To start the crafting action again
             ingredientCounter = 0;
@@ -99,7 +94,7 @@ public class CraftingAction : MonoBehaviour
         // Sort the char array containing the ingredients keys
         Array.Sort(ingredientKeys);
         // Make the array into a new string for comparison
-        string combinedKeys = new string(ingredientKeys);
+        combinedKeys = new string(ingredientKeys);
         foreach (var potion in data.potions)
         {
             if (potion.Key.Equals(combinedKeys))
@@ -113,10 +108,42 @@ public class CraftingAction : MonoBehaviour
     //TODO: 4-case scenario for crafting action result
     void checkResult()
     {
+        string result = new string(getResult());
         Debug.Log("Result check here...");
-        // IF ISNEW AND ISREQUESTED
-        // IF !ISNEW AND ISREQUESTED
-        // IF ISNEW AND !ISREQUESTED
-        // IF !ISNEW AND !ISREQUESTED
+        if (!result.Equals(" "))
+        {
+            // The ingredients combination exist as a "potions" dictionary key
+            Debug.Log("Found " + getResult());
+            // Checking the potion found against the customer (npc) order
+            foreach(var order in data.orders)
+            {
+                // 1. find the entry in the "orders" dictionary
+                if (orderText.text.Equals(order.Value))
+                {
+                    foreach(var potion in data.potions)
+                    {
+                        // 2. find the entry in the "potions" dictionary 
+                        if (result.Equals(potion.Value))
+                        {
+                            // 3.1. if their keys are equal the right potion has been found
+                            if (order.Key == potion.Key)
+                            {
+                                Debug.Log("IT'S THE RIGHT POTION");
+                            }
+                            // 3.2. else a potion has been found, but it's not the right one
+                            else
+                            {
+                                Debug.Log("Wrong potion, try again!");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            // The ingredients combination doesn't exist as a "potions" dictionary key
+            Debug.Log("Potion not found.");
+        }
     }
 }

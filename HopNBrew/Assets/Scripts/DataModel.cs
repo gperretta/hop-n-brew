@@ -24,7 +24,19 @@ public class DataModel
         {"ABD", "sleep potion"},
         {"ABC", "love potion"},
         {"ACD", "make-me-tall potion"},
-        {"ADE", "make-me-small potion"}
+        {"ADE", "make-me-small potion"},
+        {"ADF", "creatività finita" }
+    };
+    // Key type: string, Value type: string
+    public Dictionary<string, string> orders = new Dictionary<string, string>()
+    {
+        // A, B, C, D
+        {"ABD", "my baby cries a lot, help me make him fall asleep pls"},
+        {"ABC", "help me make a beautiful fox fall in love with me"},
+        {"ACD", "i want to grab the highest apple on the tree"},
+        {"ADE", "i wanna live with ants!!"},
+        // Adding F
+        {"ADF", "questo non deve uscire" }
     };
 }
 

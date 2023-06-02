@@ -10,8 +10,7 @@ public class NpcMovement : MonoBehaviour
 {
     // To set how fast the prefabs will move
     public float moveSpeed = 5;
-    // Calling the dialogueObject prefab to be spawned
-    public GameObject dialogueObject;
+    public bool npcHasStopped = false;
 
     void Update()
     {
@@ -32,19 +31,7 @@ public class NpcMovement : MonoBehaviour
         {
             // Stop the movement
             moveSpeed = 0;
-            Debug.Log("Collision detected: Npc has stopped.");
-            spawnBox();
+            npcHasStopped = true;
         }
-    }
-
-    /// <summary>
-    /// Spawn the dialogueObject prefab
-    /// </summary>
-    void spawnBox()
-    {
-        // Spawning the prefab in the assigned position (check prefab inspector)
-        Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y, 0);
-        // To instantiate/clone the prefab
-        Instantiate(dialogueObject, spawnPosition, transform.rotation);
     }
 }
