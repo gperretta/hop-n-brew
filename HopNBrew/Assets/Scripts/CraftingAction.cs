@@ -16,12 +16,13 @@ public class CraftingAction : MonoBehaviour
     private string draggedIngredient;
     // Will contain the (dictionary) keys associated to the added ingredients
     private char[] ingredientKeys;
+    // Max number of ingredients to be added/combined
     private const int slotNumber = 3;
+    // To track the added/combined ingredients in the slots
     public int ingredientCounter;
-    // To be set with the potion founded as a result for the crafting action
-    private string potionToServe;
-    private string potionToSave;
-    private string combinedKeys;
+    // Utility variable to track player's ingredients combination
+    private string playerCombination;
+    // To check the customer (npc) order vs the crafted potion
     public TextMeshProUGUI orderText;
 
     /// <summary>
@@ -40,7 +41,7 @@ public class CraftingAction : MonoBehaviour
     /// <summary>
     /// Detect collision between the pot gameObject and the ingredients gameObject 
     /// </summary>
-    /// <param name="collision">Collision2D gameObject component</param>
+    /// <param name="collision">ingredient Collision2D component</param>
     void OnCollisionEnter2D(Collision2D collision)
     {
         // When the slots are not filled
@@ -71,7 +72,6 @@ public class CraftingAction : MonoBehaviour
     /// <param name="ingredientName"></param>
     void addIngredientKeys(string ingredientName)
     {
-        Debug.Log("Just added: " + draggedIngredient);
         foreach (var ingredient in data.ingredients)
         {
             // Find the added ingredient in the ingredients dictionary
@@ -79,38 +79,36 @@ public class CraftingAction : MonoBehaviour
             {
                 // Find the associated key
                 ingredientKeys[ingredientCounter] = ingredient.Key;
-                Debug.Log(ingredient.Value + " has key: " + ingredientKeys[ingredientCounter]);
+                Debug.Log("Added: " + ingredient.Value + " (" + ingredient.Key + ")");
             }
         }
     }
 
     /// <summary>
-    /// Get the crafting action result, after combining ingredients
+    /// Get the crafting action result, after combining ingredients 
     /// </summary>
-    /// <returns>a string with the potion name or a void string</returns>
+    /// <returns>A string with the potion name or -1</returns>
     string getResult()
     {
-        string result = " ";
         // Sort the char array containing the ingredients keys
         Array.Sort(ingredientKeys);
         // Make the array into a new string for comparison
-        combinedKeys = new string(ingredientKeys);
+        playerCombination = new string(ingredientKeys);
         foreach (var potion in data.potions)
         {
-            if (potion.Key.Equals(combinedKeys))
-            {
-                result = potion.Value;
-            }
+            // If the player's combination is an existing potion, then return it
+            if (potion.Key.Equals(playerCombination)){ return potion.Value; }
         }
-        return result;
+        return new string("-1");
     }
 
     //TODO: 4-case scenario for crafting action result
     void checkResult()
     {
-        string result = new string(getResult());
-        Debug.Log("Result check here...");
-        if (!result.Equals(" "))
+        string resultToCheck = new string(getResult());
+
+        // If a potion has been crafted, then check the associated scenario
+        if (!resultToCheck.Equals("-1"))
         {
             // The ingredients combination exist as a "potions" dictionary key
             Debug.Log("Found " + getResult());
@@ -120,22 +118,13 @@ public class CraftingAction : MonoBehaviour
                 // 1. find the entry in the "orders" dictionary
                 if (orderText.text.Equals(order.Value))
                 {
-                    foreach(var potion in data.potions)
+                    // 2. check if its key is equal to the player's crafted potion
+                    if (order.Key == playerCombination)
                     {
-                        // 2. find the entry in the "potions" dictionary 
-                        if (result.Equals(potion.Value))
-                        {
-                            // 3.1. if their keys are equal the right potion has been found
-                            if (order.Key == potion.Key)
-                            {
-                                Debug.Log("IT'S THE RIGHT POTION");
-                            }
-                            // 3.2. else a potion has been found, but it's not the right one
-                            else
-                            {
-                                Debug.Log("Wrong potion, try again!");
-                            }
-                        }
+                        Debug.Log("IT'S THE RIGHT POTION");
+                    } else
+                    {
+                        Debug.Log("It's not the right potion, try again!");
                     }
                 }
             }

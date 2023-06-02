@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// - To define ingredients and potions dictionaries
 /// - Not attached to any game object (not inherited from MonoBehaviour)
+/// - To define ingredients and potions dictionaries
 /// </summary>
 public class DataModel
 {
@@ -24,9 +24,10 @@ public class DataModel
         {"ABD", "sleep potion"},
         {"ABC", "love potion"},
         {"ACD", "make-me-tall potion"},
-        {"ADE", "make-me-small potion"},
-        {"ADF", "creatività finita" }
+        {"BCD", "make-me-small potion"},
+        {"ADE", "creatività finita" }
     };
+    //FIXME: review check criteria to make a feasible potion request
     // Key type: string, Value type: string
     public Dictionary<string, string> orders = new Dictionary<string, string>()
     {
@@ -34,9 +35,9 @@ public class DataModel
         {"ABD", "my baby cries a lot, help me make him fall asleep pls"},
         {"ABC", "help me make a beautiful fox fall in love with me"},
         {"ACD", "i want to grab the highest apple on the tree"},
-        {"ADE", "i wanna live with ants!!"},
-        // Adding F
-        {"ADF", "questo non deve uscire" }
+        {"BCD", "i wanna live with ants!!"},
+        // Adding E
+        {"ADE", "questo non deve uscire" }
     };
 }
 
