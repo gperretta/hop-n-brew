@@ -24,6 +24,8 @@ public class CraftingAction : MonoBehaviour
     private string playerCombination;
     // To check the customer (npc) order vs the crafted potion
     public TextMeshProUGUI orderText;
+    // To track the state of the order
+    public bool customerServed;
 
     /// <summary>
     /// Init variables; it runs when the game starts.
@@ -36,6 +38,7 @@ public class CraftingAction : MonoBehaviour
         ingredientKeys = new char[slotNumber];
         // Reset counter
         ingredientCounter = 0;
+        customerServed = false;
     }
 
     /// <summary>
@@ -102,7 +105,7 @@ public class CraftingAction : MonoBehaviour
         return new string("-1");
     }
 
-    //TODO: 4-case scenario for crafting action result
+    // TODO: condition-checks on the potion book yet to add
     void checkResult()
     {
         string resultToCheck = new string(getResult());
@@ -122,6 +125,8 @@ public class CraftingAction : MonoBehaviour
                     if (order.Key == playerCombination)
                     {
                         Debug.Log("IT'S THE RIGHT POTION");
+                        // Change the state of the order
+                        customerServed = true;
                     } else
                     {
                         Debug.Log("It's not the right potion, try again!");

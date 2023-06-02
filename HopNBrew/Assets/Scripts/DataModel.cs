@@ -27,16 +27,13 @@ public class DataModel
         {"BCD", "make-me-small potion"},
         {"ADE", "creatività finita" }
     };
-    //FIXME: review check criteria to make a feasible potion request
     // Key type: string, Value type: string
     public Dictionary<string, string> orders = new Dictionary<string, string>()
     {
-        // A, B, C, D
         {"ABD", "my baby cries a lot, help me make him fall asleep pls"},
         {"ABC", "help me make a beautiful fox fall in love with me"},
         {"ACD", "i want to grab the highest apple on the tree"},
         {"BCD", "i wanna live with ants!!"},
-        // Adding E
         {"ADE", "questo non deve uscire" }
     };
 }

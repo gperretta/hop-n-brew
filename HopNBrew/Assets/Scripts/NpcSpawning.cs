@@ -9,11 +9,23 @@ using UnityEngine;
 public class NpcSpawning : MonoBehaviour
 {
     public GameObject npcPrefab;
+    private GameObject previousNpc;
 
     private void Start()
     {
-        // Spawn the first npc:
+        // Spawn the first npc
         spawnNpc();
+    }
+
+    private void Update()
+    {
+        previousNpc = GameObject.FindWithTag("npc");
+        // If there's no previous npc on screen
+        if (previousNpc == null)
+        {
+            // Spawn again
+            spawnNpc();
+        }
     }
 
     /// <summary>

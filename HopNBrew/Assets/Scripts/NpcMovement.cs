@@ -9,15 +9,42 @@ using UnityEngine;
 public class NpcMovement : MonoBehaviour
 {
     // To set how fast the prefabs will move
-    public float moveSpeed = 5;
-    public bool npcHasStopped = false;
+    private float moveSpeed = 3;
+    // Use the Pot gameObject to get its script component
+    private GameObject pot;
+    private CraftingAction craftingScript;
+    // FIXME: to track when the npc can be destroyed 
+    private int offScreen = 4;
+
+    private void Start()
+    {
+        // If the gameObject is on scene, get its script
+        pot = GameObject.Find("Pot");
+        if (pot != null)
+        {
+            craftingScript = pot.GetComponent<CraftingAction>();
+        }
+    }
 
     void Update()
     {
-        // Move to the left
-        transform.position = transform.position + (Vector3.left * moveSpeed) * Time.deltaTime;
-        // Move to the right
-        //transform.position = transform.position + (Vector3.right * moveSpeed) * Time.deltaTime;
+        // TODO: optimise/clean code block
+        if (!craftingScript.customerServed)
+        {
+            // Move to the left to enter on scene
+            transform.position = transform.position + (Vector3.left * moveSpeed) * Time.deltaTime;
+        } else
+        {
+            // Move to the right to get out
+            moveSpeed = 2;
+            transform.position = transform.position + (Vector3.right * moveSpeed) * Time.deltaTime;
+            // Destroy off-screen
+            if (transform.position.x > offScreen)
+            {
+                craftingScript.customerServed = false;
+                Destroy(gameObject);
+            }
+        }
     }
 
     /// <summary>
@@ -27,11 +54,10 @@ public class NpcMovement : MonoBehaviour
     /// <param name="collision"></param>
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("stopNpc"))
+        if (collision.gameObject.CompareTag("stopNpc") && !craftingScript.customerServed)
         {
             // Stop the movement
             moveSpeed = 0;
-            npcHasStopped = true;
         }
     }
 }

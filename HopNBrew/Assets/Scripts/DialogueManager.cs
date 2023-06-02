@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,15 +21,13 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI orderText;
     // Use the DataModel class, where the dictionaries are defined (ingredients and potions lists)
     private DataModel data;
-    // To track the ingredients on scene 
-    private int ingredientsCounter;
+    // To use the dictionary values collection as a list of strings
+    List<string> ordersList = new List<string>();
 
     private void Start()
     {
         // Call a zero-argument constructor for Crafting class
         data = new DataModel();
-        // Reset counter
-        ingredientsCounter = 0;
     }
 
     /// <summary>
@@ -42,9 +41,20 @@ public class DialogueManager : MonoBehaviour
         {
             // 1. make the dialogue box visible
             activateDialogueCanvas();
-            // 2. display the text dynamically
+            // 2. check which orders are currently feasible
+            checkFeasibileOrders();
+            // 3. display one of the feasible order as a text
             displayOrder();
         }
+    }
+
+    /// <summary>
+    /// Detect when the empty gameObject (StartDialoguePoint) and the npc stops touching
+    /// </summary>
+    /// <param name="collision">npc Collision2D component</param>
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        deactivateDialogueCanvas();
     }
 
     /// <summary>
@@ -57,41 +67,46 @@ public class DialogueManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Check the ingredients on scene and count them
+    /// Set the DialogueCanvas gameObject not active
+    /// Pre-condition: previously activated by collision trigger
     /// </summary>
-    /// <returns>An int number being the updated ingredientsCounter</returns>
-    private int checkIngredients()
+    void deactivateDialogueCanvas()
     {
+        dialogueCanvas.SetActive(false);
+    }
+
+    /// <summary>
+    /// Remove from the orders list the ones that are not feasible
+    /// </summary>
+    private void checkFeasibileOrders()
+    {
+        // Copy all the orders values (string) in the list
+        ordersList.AddRange(data.orders.Values);
         foreach (var ingredient in data.ingredients)
         {
-            if (GameObject.Find(ingredient.Value) != null) { ingredientsCounter += 1; }
+            // If an ingredient is not on scene is NOT mixable
+            if (GameObject.Find(ingredient.Value) == null)
+            {
+                foreach (var order in data.orders)
+                {
+                    // Remove from the values list the ingredients that CAN'T be mixed
+                    if (order.Key.Contains(ingredient.Key))
+                    {
+                        ordersList.Remove(order.Value);
+                    }
+                }
+            }
         }
-        return ingredientsCounter;
     }
 
     /// <summary>
-    /// Get a random (string) value from the orders dictionary
-    /// </summary>
-    /// <param name="dictionary">Dictionary to extract a Value from</param>
-    /// <param name="rangeStart">Upper bound of the range (included)</param>
-    /// <param name="rangeEnd">Lower bound of the range (not included)</param>
-    /// <returns>The extracted string</returns>
-    private string getRandomOrder(Dictionary<string, string> dictionary, int rangeStart, int rangeEnd)
-    {
-        // Convert the collection of the dictionary values into a list
-        // NOTE: dictionaries do not support ordered indexing or sorting in C#
-        List<string> valuesList = new List<string>(dictionary.Values);
-        // Get a random index in a given range
-        int randomIndex = Random.Range(rangeStart, rangeEnd + 1);
-        return valuesList[randomIndex];
-    }
-
-    /// <summary>
-    /// Pass the order (picked randomly from a given range) to TextMeshPro object
+    /// Pick a random order within the feasible one
     /// </summary>
     private void displayOrder()
     {
-        int trimIndex = checkIngredients();
-        orderText.text = getRandomOrder(data.orders, 0, trimIndex-1);
+        // Get a random index
+        int randomIndex = Random.Range(0, ordersList.Count());
+        // Set the TextMeshPro text input
+        orderText.text = ordersList[randomIndex];
     }
 }

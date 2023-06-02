@@ -845,7 +845,7 @@ GameObject:
   - component: {fileID: 1288724489}
   m_Layer: 0
   m_Name: StartDialoguePoint
-  m_TagString: Untagged
+  m_TagString: stopNpc
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1344,9 +1344,10 @@ GameObject:
   - component: {fileID: 1620609572}
   - component: {fileID: 1620609571}
   - component: {fileID: 1620609574}
+  - component: {fileID: 1620609575}
   m_Layer: 0
   m_Name: FrogCounter
-  m_TagString: stopNpc
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1431,7 +1432,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.045336276, y: 0}
+  m_Offset: {x: 0.03869444, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1442,8 +1443,29 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0906723, y: 1}
+  m_Size: {x: 1.0773888, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &1620609575
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620609570}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1662338187
 GameObject:
   m_ObjectHideFlags: 0
