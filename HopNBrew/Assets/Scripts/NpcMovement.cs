@@ -14,7 +14,7 @@ public class NpcMovement : MonoBehaviour
     private GameObject pot;
     private CraftingAction craftingScript;
     // FIXME: to track when the npc can be destroyed 
-    private int offScreen = 4;
+    private int deathZone = 4;
 
     private void Start()
     {
@@ -39,7 +39,7 @@ public class NpcMovement : MonoBehaviour
             moveSpeed = 2;
             transform.position = transform.position + (Vector3.right * moveSpeed) * Time.deltaTime;
             // Destroy off-screen
-            if (transform.position.x > offScreen)
+            if (transform.position.x > deathZone)
             {
                 craftingScript.customerServed = false;
                 Destroy(gameObject);
