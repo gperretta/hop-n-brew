@@ -8,11 +8,9 @@ using UnityEngine;
 /// </summary>
 public class NpcMovement : MonoBehaviour
 {
-    // To set how fast the prefabs will move
     private float moveSpeed = 2;
-    // Use the Pot gameObject to get its script component
-    private GameObject pot;
-    private CraftingAction craftingScript;
+    private GameObject pot; // use the Pot gameObject 
+    private CraftingAction craftingScript; // to get the script component
     // FIXME: to track when the npc can be destroyed 
     private int deathZone = 4;
 
@@ -31,11 +29,9 @@ public class NpcMovement : MonoBehaviour
         // TODO: optimise/clean code block
         if (!craftingScript.customerServed)
         {
-            // Move to the left to enter on scene
             transform.position = transform.position + (Vector3.left * moveSpeed) * Time.deltaTime;
         } else
         {
-            // Move to the right to get out
             moveSpeed = 1.5f;
             transform.position = transform.position + (Vector3.right * moveSpeed) * Time.deltaTime;
             // Destroy off-screen

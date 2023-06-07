@@ -23,7 +23,6 @@ public class NpcSpawning : MonoBehaviour
         // If there's no previous npc on screen
         if (previousNpc == null)
         {
-            // Spawn again
             spawnNpc();
         }
     }
@@ -37,7 +36,6 @@ public class NpcSpawning : MonoBehaviour
 
         // Spawning the prefab (npc) in the spawn point (gameObject)
         Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y, 0);
-        // To instantiate/clone the prefab
         Instantiate(npcPrefab, spawnPosition, transform.rotation);
         Debug.Log("New Npc prefab spawned.");
     }

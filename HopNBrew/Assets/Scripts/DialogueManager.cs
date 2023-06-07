@@ -15,14 +15,10 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class DialogueManager : MonoBehaviour
 {
-    // Use the dialogueCanvas where the Text is contained
     public GameObject dialogueCanvas;
-    // Use the TextMeshPro object to display the order
     public TextMeshProUGUI orderText;
-    // Use the DataModel class, where the dictionaries are defined (ingredients and potions lists)
     private DataModel data;
-    // To use the dictionary values collection as a list of strings
-    List<string> ordersList = new List<string>();
+    List<string> ordersList = new List<string>(); // dictionary values collection as a list of strings
 
     private void Start()
     {
@@ -36,7 +32,7 @@ public class DialogueManager : MonoBehaviour
     /// <param name="collision">npc Collision2D component</param>
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // When the npc gets to the stopping + starting-dialogue point
+        // When the npc gets to the starting-dialogue point
         if (collision.gameObject.CompareTag("npc"))
         {
             // 1. make the dialogue box visible
@@ -57,19 +53,13 @@ public class DialogueManager : MonoBehaviour
         deactivateDialogueCanvas();
     }
 
-    /// <summary>
-    /// Set the DialogueCanvas gameObject active
-    /// Pre-condition: visibility unchecked in the inspector
+    /// <summary> x2
+    /// Set the DialogueCanvas gameObject visibility to true/false
     /// </summary>
     void activateDialogueCanvas()
     {
         dialogueCanvas.SetActive(true);
     }
-
-    /// <summary>
-    /// Set the DialogueCanvas gameObject not active
-    /// Pre-condition: previously activated by collision trigger
-    /// </summary>
     void deactivateDialogueCanvas()
     {
         dialogueCanvas.SetActive(false);
@@ -106,7 +96,6 @@ public class DialogueManager : MonoBehaviour
     {
         // Get a random index
         int randomIndex = Random.Range(0, ordersList.Count());
-        // Set the TextMeshPro text input
         orderText.text = ordersList[randomIndex];
     }
 }

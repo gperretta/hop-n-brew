@@ -11,36 +11,22 @@ using UnityEngine;
 /// </summary>
 public class CraftingAction : MonoBehaviour
 {
-    // Use the DataModel class, where the dictionaries are defined (ingredients and potions lists)
     private DataModel data;
-    // To be set with the name of the ingredient that collides with the pot
-    private string draggedIngredient;
-    // Will contain the (dictionary) keys associated to the added ingredients
-    private char[] ingredientKeys;
-    // Max number of ingredients to be added/combined
+    private string draggedIngredient; // for ingredients that collided with the pot
+    private char[] ingredientKeys; // (dictionary) keys associated to the added ingredients
     private const int slotNumber = 3;
-    // To track the added/combined ingredients in the slots
-    public int ingredientCounter;
-    // Utility variable to track player's ingredients combination
-    private string playerCombination;
-    // To check the customer (npc) order vs the crafted potion
+    public int ingredientCounter; // to track the added/combined ingredients in the slots
+    private string playerCombination; // to track player's ingredients combination
     public TextMeshProUGUI orderText;
-    // To track the state of the order
-    public bool potionIsRight;
+    public bool potionIsRight; 
     public bool customerServed;
     // Display a pop-up with the result of the crafting action
     public GameObject popUpCanvas;
     public TextMeshProUGUI messageText;
-    string[] messages = new string[]
-    {
-        "It's the right potion, you can serve the customer!",
-        "It's not the right potion, but you can try again!",
-        "Something went wrong, this combination is not a potion"
-    };
+    private string rightPotion = "\nIt's the right one, now you can serve the customer!";
+    private string wrongPotion = "\nIt's not the right one, but you can try again!";
+    private string notAPotion = "Something went wrong, this combination is not a potion, but let's try again!";
 
-    /// <summary>
-    /// Init variables; it runs when the game starts.
-    /// </summary>
     private void Start()
     {
         // Call a zero-argument constructor for Crafting class
@@ -111,8 +97,10 @@ public class CraftingAction : MonoBehaviour
         playerCombination = new string(ingredientKeys);
         foreach (var potion in data.potions)
         {
-            // If the player's combination is an existing potion, then return it
-            if (potion.Key.Equals(playerCombination)){ return potion.Value; }
+            if (potion.Key.Equals(playerCombination))
+            {
+                return new string("It's a " + potion.Value + "! ");
+            }
         }
         return new string("-1");
     }
@@ -125,10 +113,8 @@ public class CraftingAction : MonoBehaviour
         // If a potion has been crafted, then check the associated scenario
         if (!resultToCheck.Equals("-1"))
         {
-            // The ingredients combination exist as a "potions" dictionary key
-            Debug.Log("Found " + getResult());
             // Checking the potion found against the customer (npc) order
-            foreach(var order in data.orders)
+            foreach (var order in data.orders)
             {
                 // 1. find the entry in the "orders" dictionary
                 if (orderText.text.Equals(order.Value))
@@ -136,13 +122,11 @@ public class CraftingAction : MonoBehaviour
                     // 2. check if its key is equal to the player's crafted potion
                     if (order.Key == playerCombination)
                     {
-                        Debug.Log("IT'S THE RIGHT POTION");
-                        StartCoroutine(displayPopUp(messages[0]));
+                        StartCoroutine(displayPopUp(getResult() + rightPotion));
                         potionIsRight = true;
                     } else
                     {
-                        Debug.Log("It's not the right potion, try again!");
-                        StartCoroutine(displayPopUp(messages[1]));
+                        StartCoroutine(displayPopUp(getResult() + wrongPotion));
 
                     }
                 }
@@ -151,12 +135,16 @@ public class CraftingAction : MonoBehaviour
         else
         {
             // The ingredients combination doesn't exist as a "potions" dictionary key
-            Debug.Log("Potion not found.");
-            StartCoroutine(displayPopUp(messages[2]));
+            StartCoroutine(displayPopUp(notAPotion));
             
         }
     }
 
+    /// <summary>
+    /// Coroutine for the pop-up appearance (with a 0.3 sec delay)
+    /// </summary>
+    /// <param name="message">A string to pass to text element</param>
+    /// <returns></returns>
     IEnumerator displayPopUp(string message)
     {
         Debug.Log("POPUP");
@@ -164,6 +152,10 @@ public class CraftingAction : MonoBehaviour
         popUpCanvas.SetActive(true);
         messageText.text = message;
     }
+
+    /// <summary>
+    /// Function called by the button: Exit 
+    /// </summary>
     public void exitPopUp()
     {
         Debug.Log("EXIT");
