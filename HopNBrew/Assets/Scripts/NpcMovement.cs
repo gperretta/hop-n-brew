@@ -9,7 +9,7 @@ using UnityEngine;
 public class NpcMovement : MonoBehaviour
 {
     // To set how fast the prefabs will move
-    private float moveSpeed = 3;
+    private float moveSpeed = 2;
     // Use the Pot gameObject to get its script component
     private GameObject pot;
     private CraftingAction craftingScript;
@@ -36,7 +36,7 @@ public class NpcMovement : MonoBehaviour
         } else
         {
             // Move to the right to get out
-            moveSpeed = 2;
+            moveSpeed = 1.5f;
             transform.position = transform.position + (Vector3.right * moveSpeed) * Time.deltaTime;
             // Destroy off-screen
             if (transform.position.x > deathZone)
