@@ -91,9 +91,6 @@ public class CraftingAction : MonoBehaviour
     /// <returns>A string with the potion name or -1</returns>
     string getResult()
     {
-        // Sort the char array containing the ingredients keys
-        Array.Sort(ingredientKeys);
-        // Make the array into a new string for comparison
         playerCombination = new string(ingredientKeys);
         foreach (var potion in data.potions)
         {

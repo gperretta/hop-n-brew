@@ -1434,7 +1434,7 @@ GameObject:
   - component: {fileID: 1183478237}
   - component: {fileID: 1183478238}
   m_Layer: 0
-  m_Name: catnip
+  m_Name: Fresh Firefruit
   m_TagString: ingredient
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2658,7 +2658,7 @@ GameObject:
   - component: {fileID: 1662338190}
   - component: {fileID: 1662338191}
   m_Layer: 0
-  m_Name: wicked apple
+  m_Name: Shiny Goldenmud
   m_TagString: ingredient
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3287,7 +3287,7 @@ GameObject:
   - component: {fileID: 2131978037}
   - component: {fileID: 2131978038}
   m_Layer: 0
-  m_Name: chicken tail
+  m_Name: "Malokio\u2019s Twin Eyes"
   m_TagString: ingredient
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
