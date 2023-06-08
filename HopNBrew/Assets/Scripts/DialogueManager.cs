@@ -77,11 +77,14 @@ public class DialogueManager : MonoBehaviour
             // If an ingredient is not on scene is NOT mixable
             if (GameObject.Find(ingredient.Value) == null)
             {
+                Debug.Log(ingredient.Value);
                 foreach (var order in data.orders)
                 {
+                    Debug.Log(order);
                     // Remove from the values list the ingredients that CAN'T be mixed
                     if (order.Key.Contains(ingredient.Key))
                     {
+                        Debug.Log("remove " + order.Value);
                         ordersList.Remove(order.Value);
                     }
                 }
@@ -96,6 +99,8 @@ public class DialogueManager : MonoBehaviour
     {
         // Get a random index
         int randomIndex = Random.Range(0, ordersList.Count());
+        Debug.Log(ordersList.Count());
+        Debug.Log(randomIndex);
         orderText.text = ordersList[randomIndex];
     }
 }
