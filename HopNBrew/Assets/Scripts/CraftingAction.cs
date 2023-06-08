@@ -124,7 +124,7 @@ public class CraftingAction : MonoBehaviour
                     } else
                     {
                         StartCoroutine(displayPopUp(getResult() + wrongPotion));
-
+                        potionIsRight = false;
                     }
                 }
             }
@@ -133,7 +133,7 @@ public class CraftingAction : MonoBehaviour
         {
             // The ingredients combination doesn't exist as a "potions" dictionary key
             StartCoroutine(displayPopUp(notAPotion));
-            
+            potionIsRight = false;
         }
     }
 
@@ -144,7 +144,6 @@ public class CraftingAction : MonoBehaviour
     /// <returns></returns>
     IEnumerator displayPopUp(string message)
     {
-        Debug.Log("POPUP");
         yield return new WaitForSeconds(0.3f);
         popUpCanvas.SetActive(true);
         messageText.text = message;
@@ -155,12 +154,12 @@ public class CraftingAction : MonoBehaviour
     /// </summary>
     public void exitPopUp()
     {
-        Debug.Log("EXIT");
         popUpCanvas.SetActive(false);
         // Change the state of the order
         if (potionIsRight)
         {
             customerServed = true;
         }
+        potionIsRight = false;
     }
 }
