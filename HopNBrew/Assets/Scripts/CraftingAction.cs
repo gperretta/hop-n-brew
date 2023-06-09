@@ -31,6 +31,8 @@ public class CraftingAction : MonoBehaviour
     private string wrongPotion = "You've found a potion, but not quite the right one. Let's try again!";
     private string notAPotion = "Sorry, this combination doesn't make a potion, but don't worry, let's try again!";
 
+    private int npcCounter;
+
     private void Start()
     {
         // Call a zero-argument constructor for Crafting class
@@ -42,6 +44,8 @@ public class CraftingAction : MonoBehaviour
         customerServed = false;
         potionIsRight = false;
         rewardScript = rewardTrigger.GetComponent<RewardSystemHandler>();
+
+        npcCounter = 0;
     }
 
     /// <summary>
@@ -137,6 +141,7 @@ public class CraftingAction : MonoBehaviour
                 {
                     StartCoroutine(displayPopUp(getPotion() + rightPotion));
                     potionIsRight = true;
+                    npcCounter++;
                 }
                 else
                 {
@@ -169,8 +174,11 @@ public class CraftingAction : MonoBehaviour
         popUpCanvas.SetActive(false);
         if (potionIsRight)
         {
-            customerServed = true;
             rewardScript.getReward();
+            if (npcCounter > 3)
+            {
+                customerServed = true;
+            }
         }
         potionIsRight = false;
     }
