@@ -11,7 +11,6 @@ public class NpcMovement : MonoBehaviour
     private float moveSpeed = 2;
     private GameObject pot; // use the Pot gameObject 
     private CraftingAction craftingScript; // to get the script component
-    // FIXME: to track when the npc can be destroyed 
     private int deathZone = 4;
 
     private void Start()
@@ -26,21 +25,7 @@ public class NpcMovement : MonoBehaviour
 
     void Update()
     {
-        // TODO: optimise/clean code block
-        if (!craftingScript.customerServed)
-        {
-            transform.position = transform.position + (Vector3.left * moveSpeed) * Time.deltaTime;
-        } else
-        {
-            moveSpeed = 1.5f;
-            transform.position = transform.position + (Vector3.right * moveSpeed) * Time.deltaTime;
-            // Destroy off-screen
-            if (transform.position.x > deathZone)
-            {
-                craftingScript.customerServed = false;
-                Destroy(gameObject);
-            }
-        }
+        moveNpc();
     }
 
     /// <summary>
@@ -54,6 +39,36 @@ public class NpcMovement : MonoBehaviour
         {
             // Stop the movement
             moveSpeed = 0;
+        }
+    }
+
+    /// <summary>
+    /// Actual npc movement to go in (left direction) and out (right direction) scene
+    /// </summary>
+    private void moveNpc()
+    {
+        // TODO: optimise/clean code block
+        if (!craftingScript.customerServed)
+        {
+            transform.position = transform.position + (Vector3.left * moveSpeed) * Time.deltaTime;
+        }
+        else
+        {
+            moveSpeed = 1.5f;
+            transform.position = transform.position + (Vector3.right * moveSpeed) * Time.deltaTime;
+            checkScreenBoundaries();
+        }
+    }
+
+    /// <summary>
+    /// Destroy npc when off-screen
+    /// </summary>
+    private void checkScreenBoundaries()
+    {
+        if (transform.position.x > deathZone)
+        {
+            craftingScript.customerServed = false;
+            Destroy(gameObject);
         }
     }
 }

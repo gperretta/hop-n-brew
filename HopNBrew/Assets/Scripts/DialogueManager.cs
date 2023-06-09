@@ -85,6 +85,9 @@ public class DialogueManager : MonoBehaviour
                         ordersList.Remove(order.Value);
                     }
                 }
+            } else
+            {
+                Debug.Log(ingredient.Value);
             }
         }
     }

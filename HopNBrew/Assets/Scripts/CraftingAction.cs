@@ -15,17 +15,21 @@ public class CraftingAction : MonoBehaviour
     private string draggedIngredient; // for ingredients that collided with the pot
     private char[] ingredientKeys; // (dictionary) keys associated to the added ingredients
     private const int slotNumber = 3;
-    public int ingredientCounter; // to track the added/combined ingredients in the slots
+    private int ingredientCounter; // to track the added/combined ingredients in the slots
     private string playerCombination; // to track player's ingredients combination
     public TextMeshProUGUI orderText;
-    public bool potionIsRight; 
+    private bool potionIsRight; 
     public bool customerServed;
     // Display a pop-up with the result of the crafting action
     public GameObject popUpCanvas;
     public TextMeshProUGUI messageText;
-    private string rightPotion = "\nIt's the right one, now you can serve the customer!";
-    private string wrongPotion = "\nIt's not the right one, but you can try again!";
-    private string notAPotion = "Something went wrong, this combination is not a potion, but let's try again!";
+    // Handle the reward 
+    public GameObject rewardTrigger;
+    private RewardSystemHandler rewardScript;
+    // Message sample(s)
+    private string rightPotion = "It's the right potion! Serve the customer and get your reward!";
+    private string wrongPotion = "You've found a potion, but not quite the right one. Let's try again!";
+    private string notAPotion = "Sorry, this combination doesn't make a potion, but don't worry, let's try again!";
 
     private void Start()
     {
@@ -37,59 +41,75 @@ public class CraftingAction : MonoBehaviour
         ingredientCounter = 0;
         customerServed = false;
         potionIsRight = false;
+        rewardScript = rewardTrigger.GetComponent<RewardSystemHandler>();
     }
 
     /// <summary>
-    /// Detect collision between the pot gameObject and the ingredients gameObject 
+    /// Detect collision between the pot gameObject and the ingredients gameObject
+    /// until the slots (=3) are filled, check the crafting result and start again
     /// </summary>
     /// <param name="collision">ingredient Collision2D component</param>
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // When the slots are not filled
-        if (ingredientCounter < slotNumber)
+        if (ingredientCounter < slotNumber) // When the slots are not filled
         {
             if (collision.gameObject.CompareTag("ingredient"))
             {
-                // Get the name of the gameObject involved in the collision event
                 draggedIngredient = collision.gameObject.name;
-                // Perform crafting
                 addIngredientKeys(draggedIngredient);
-                // Increase counter and move on the char array
                 ingredientCounter += 1;
             }
         }
-        // After the slots got filled
-        if (ingredientCounter == slotNumber)
+        if (ingredientCounter == slotNumber) // After the slots got filled
         {
             checkResult();
-            // To start the crafting action again
-            ingredientCounter = 0;
+            ingredientCounter = 0; // To start the crafting action again
         }
     }
 
     /// <summary>
-    /// Get the ingredients key from the dictionary and put them in the ingredientKeys array
+    /// Get the ingredients keys from the dictionary and put them
+    /// in the ingredientKeys char array
     /// </summary>
     /// <param name="ingredientName"></param>
     void addIngredientKeys(string ingredientName)
     {
         foreach (var ingredient in data.ingredients)
         {
-            // Find the added ingredient in the ingredients dictionary
             if (draggedIngredient.Equals(ingredient.Value))
             {
-                // Find the associated key
                 ingredientKeys[ingredientCounter] = ingredient.Key;
                 Debug.Log("Added: " + ingredient.Value + " (" + ingredient.Key + ")");
             }
         }
     }
 
+
     /// <summary>
-    /// Get the crafting action result, after combining ingredients 
+    /// Check crafting result:
+    /// IF the ingredients combination makes in a potion, check against the customer (npc) order
+    /// ELSE the ingredients combination doesn't make an existing potion
+    /// </summary>
+    void checkResult()
+    {
+        string resultToCheck = new string(getPotion());
+        if (!resultToCheck.Equals("-1"))
+        {
+            checkOrderedPotion();
+        }
+        else
+        {
+            StartCoroutine(displayPopUp(notAPotion));
+            potionIsRight = false;
+        }
+    }
+
+    /// <summary>
+    /// Get the crafting action result, after combining ingredients,
+    /// by comparing the combined ingredients keys with the potion keys
     /// </summary>
     /// <returns>A string with the potion name or -1</returns>
-    string getResult()
+    string getPotion()
     {
         playerCombination = new string(ingredientKeys);
         foreach (var potion in data.potions)
@@ -102,38 +122,28 @@ public class CraftingAction : MonoBehaviour
         return new string("-1");
     }
 
-    // TODO: condition-checks on the potion book yet to add
-    void checkResult()
+    /// <summary>
+    /// Checking the potion found against the customer(npc)order
+    /// </summary>
+    void checkOrderedPotion()
     {
-        string resultToCheck = new string(getResult());
-
-        // If a potion has been crafted, then check the associated scenario
-        if (!resultToCheck.Equals("-1"))
+        foreach (var order in data.orders)
         {
-            // Checking the potion found against the customer (npc) order
-            foreach (var order in data.orders)
+            // 1. find the entry in the "orders" dictionary
+            if (orderText.text.Equals(order.Value))
             {
-                // 1. find the entry in the "orders" dictionary
-                if (orderText.text.Equals(order.Value))
+                // 2. check if its key is equal to the player's crafted potion
+                if (order.Key == playerCombination)
                 {
-                    // 2. check if its key is equal to the player's crafted potion
-                    if (order.Key == playerCombination)
-                    {
-                        StartCoroutine(displayPopUp(getResult() + rightPotion));
-                        potionIsRight = true;
-                    } else
-                    {
-                        StartCoroutine(displayPopUp(getResult() + wrongPotion));
-                        potionIsRight = false;
-                    }
+                    StartCoroutine(displayPopUp(getPotion() + rightPotion));
+                    potionIsRight = true;
+                }
+                else
+                {
+                    StartCoroutine(displayPopUp(getPotion() + wrongPotion));
+                    potionIsRight = false;
                 }
             }
-        }
-        else
-        {
-            // The ingredients combination doesn't exist as a "potions" dictionary key
-            StartCoroutine(displayPopUp(notAPotion));
-            potionIsRight = false;
         }
     }
 
@@ -150,15 +160,17 @@ public class CraftingAction : MonoBehaviour
     }
 
     /// <summary>
-    /// Function called by the button: Exit 
+    /// Function called by the button: Exit
+    /// IF the potion is not the ordered one, do nothing
+    /// ELSE the customer will be served and the player will get a reward
     /// </summary>
     public void exitPopUp()
     {
         popUpCanvas.SetActive(false);
-        // Change the state of the order
         if (potionIsRight)
         {
             customerServed = true;
+            rewardScript.getReward();
         }
         potionIsRight = false;
     }
