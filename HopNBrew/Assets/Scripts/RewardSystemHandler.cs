@@ -4,24 +4,28 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// - Attached to RewardSystem gameObject
+/// - To handle the reward system as in getting a new ingredient
+/// and showing a pop-up to "notify" the reward to the player
+/// </summary>
 public class RewardSystemHandler : MonoBehaviour
 {
     public GameObject[] ingredients; // array of gameObjects
-    List<GameObject> newIngredientsList = new List<GameObject>(); // array to list to be manipulated
+    List<GameObject> hiddenIngredients = new List<GameObject>(); // array to list to be manipulated
     public GameObject rewardCanvas;
     public TextMeshProUGUI rewardName;
     public GameObject rewardImage;
     private GameObject pot; // use the Pot gameObject 
     private CraftingAction craftingScript; // to get the script component
 
-    // Start is called before the first frame update
     void Start()
     {
         foreach (var ingredient in ingredients)
         {
-            if (GameObject.Find(ingredient.name) == null)
+            if (GameObject.Find(ingredient.name) == null) // not active 
             {
-                newIngredientsList.Add(ingredient);
+                hiddenIngredients.Add(ingredient);
             }
         }
         // If the gameObject is on scene, get its script
@@ -38,12 +42,12 @@ public class RewardSystemHandler : MonoBehaviour
     /// </summary>
     public void getReward()
     {
-        if (newIngredientsList.Count != 0)
+        if (hiddenIngredients.Count != 0)
         {
-            GameObject newIngredient = newIngredientsList[0];
+            GameObject newIngredient = hiddenIngredients[0];
             newIngredient.SetActive(true);
             displayReward(newIngredient);
-            newIngredientsList.RemoveAt(0);
+            hiddenIngredients.RemoveAt(0); // Remove from the list of ingredients to be activated
         }
     }
 
@@ -58,9 +62,12 @@ public class RewardSystemHandler : MonoBehaviour
         rewardCanvas.SetActive(true);
     }
 
+    /// <summary>
+    /// Deactivate canvas and set customerServed to true to make the npc move away 
+    /// </summary>
     public void exitButton()
     {
         rewardCanvas.SetActive(false);
-        craftingScript.customerServed = true;
+        craftingScript.customerServed = true; 
     }
 }

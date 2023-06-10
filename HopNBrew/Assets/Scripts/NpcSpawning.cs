@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 ///<summary>
 /// - Attached to the Spawn Point game object
@@ -10,33 +11,42 @@ public class NpcSpawning : MonoBehaviour
 {
     public GameObject npcPrefab;
     private GameObject previousNpc;
+    public Sprite[] npcSprites;
 
     private void Start()
     {
-        // Spawn the first npc
-        spawnNpc();
+        spawnNpc(); // Spawn the first npc
     }
 
     private void Update()
     {
         previousNpc = GameObject.FindWithTag("npc");
-        // If there's no previous npc on screen
-        if (previousNpc == null)
+        if (previousNpc == null) // If there's no previous npc on screen
         {
             spawnNpc();
         }
     }
 
     /// <summary>
-    /// Spawn the npc prefab
+    /// Spawn the npc prefab in the spawn point (gameObject) and with different sprites
     /// </summary>
     void spawnNpc()
     {
-        //TODO: adding SpriteRenderer components for different npc(s)
 
-        // Spawning the prefab (npc) in the spawn point (gameObject)
         Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y, 0);
-        Instantiate(npcPrefab, spawnPosition, transform.rotation);
-        Debug.Log("New Npc prefab spawned.");
+        GameObject newNpc = Instantiate(npcPrefab, spawnPosition, transform.rotation);
+        newNpc.GetComponent<SpriteRenderer>().sprite = getRandomSprite();
+        newNpc.name = getRandomSprite().name;
+        Debug.Log(newNpc.name + " spawned.");
+    }
+
+    /// <summary>
+    /// Get a random sprite to attach to the newly instantiated npc
+    /// </summary>
+    /// <returns>a sprite randomly picked from the array</returns>
+    Sprite getRandomSprite()
+    {
+        int randomIndex = Random.Range(0, npcSprites.Length);
+        return npcSprites[randomIndex];
     }
 }

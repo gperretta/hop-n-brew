@@ -37,8 +37,7 @@ public class NpcMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("stopNpc") && !craftingScript.customerServed)
         {
-            // Stop the movement
-            moveSpeed = 0;
+            moveSpeed = 0; // Stop the movement
         }
     }
 
@@ -47,7 +46,6 @@ public class NpcMovement : MonoBehaviour
     /// </summary>
     private void moveNpc()
     {
-        // TODO: optimise/clean code block
         if (!craftingScript.customerServed)
         {
             transform.position = transform.position + (Vector3.left * moveSpeed) * Time.deltaTime;
