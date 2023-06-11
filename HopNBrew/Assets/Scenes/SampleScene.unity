@@ -1285,9 +1285,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcPrefab: {fileID: 6389971519051542017, guid: 0a6ef4c77d73f4bcba89133b0f7017d5, type: 3}
   npcSprites:
-  - {fileID: 21300000, guid: 49ba75ec993bc40178fabb7b5e77587c, type: 3}
-  - {fileID: 21300000, guid: 4a022f51228ba445f94a8a2b722d117e, type: 3}
-  - {fileID: 21300000, guid: 0a329df492a4b467fa94974d1d70cd5c, type: 3}
+  - {fileID: 21300000, guid: a691a9b941471462f97b48c144eb486c, type: 3}
+  - {fileID: 21300000, guid: 567c71dfc1ce2478181adad12cf638d4, type: 3}
+  - {fileID: 21300000, guid: b11bc3a92ce3440e5834669af2bdf7f1, type: 3}
 --- !u!4 &1010444376
 Transform:
   m_ObjectHideFlags: 0
