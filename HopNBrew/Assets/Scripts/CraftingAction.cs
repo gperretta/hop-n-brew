@@ -27,9 +27,9 @@ public class CraftingAction : MonoBehaviour
     public GameObject rewardTrigger;
     private RewardSystemHandler rewardScript;
     // Message sample(s)
-    private string rightPotion = "It's the right potion! Serve the customer and get your reward!";
-    private string wrongPotion = "You've found a potion, but not quite the right one. Let's try again!";
-    private string notAPotion = "Sorry, this combination doesn't make a potion, but don't worry, let's try again!";
+    private string rightPotion = "\nIt's the right potion, congrats! \nNow you can serve the customer and get an awesome reward.";
+    private string wrongPotion = "\nIt seems you've found a potion. \nUnluckly, it's not the right one, let's try again.";
+    private string notAPotion = "Sorry, this combination is not quite right, but don't worry, you can always try again!";
 
     private int npcCounter;
 
@@ -120,7 +120,7 @@ public class CraftingAction : MonoBehaviour
         {
             if (potion.Key.Equals(playerCombination))
             {
-                return new string("It's a " + potion.Value + "! ");
+                return new string("It's a " + potion.Value + ".");
             }
         }
         return new string("-1");
@@ -175,7 +175,7 @@ public class CraftingAction : MonoBehaviour
         if (potionIsRight)
         {
             rewardScript.getReward();
-            if (npcCounter > 3) // FOR DEMO VERSION
+            if (npcCounter > 4) // FOR DEMO VERSION
             {
                 customerServed = true;
             }
