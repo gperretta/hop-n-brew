@@ -16,6 +16,7 @@ public class CraftingAction : MonoBehaviour
     private char[] ingredientKeys; // (dictionary) keys associated to the added ingredients
     private const int slotNumber = 3;
     private int ingredientCounter; // to track the added/combined ingredients in the slots
+    public TextMeshProUGUI counterText;
     private string playerCombination; // to track player's ingredients combination
     public TextMeshProUGUI orderText;
     private bool potionIsRight; 
@@ -62,10 +63,11 @@ public class CraftingAction : MonoBehaviour
                 draggedIngredient = collision.gameObject.name;
                 addIngredientKeys(draggedIngredient);
                 ingredientCounter += 1;
+                counterText.text = ingredientCounter.ToString();
             }
         }
         if (ingredientCounter == slotNumber) // After the slots got filled
-        {
+        {  
             checkResult();
             ingredientCounter = 0; // To start the crafting action again
         }
@@ -181,5 +183,6 @@ public class CraftingAction : MonoBehaviour
             }
         }
         potionIsRight = false;
+        counterText.text = "0";
     }
 }

@@ -16,7 +16,7 @@ public class NpcMovement : MonoBehaviour
     private void Start()
     {
         // If the gameObject is on scene, get its script
-        pot = GameObject.Find("Pot");
+        pot = GameObject.Find("Pot-base");
         if (pot != null)
         {
             craftingScript = pot.GetComponent<CraftingAction>();

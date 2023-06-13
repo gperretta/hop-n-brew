@@ -16,7 +16,7 @@ public class RewardSystemHandler : MonoBehaviour
     public GameObject rewardCanvas;
     public TextMeshProUGUI rewardName;
     public GameObject rewardImage;
-    private GameObject pot; // use the Pot gameObject 
+    public GameObject pot; // use the Pot gameObject 
     private CraftingAction craftingScript; // to get the script component
 
     void Start()
@@ -28,12 +28,7 @@ public class RewardSystemHandler : MonoBehaviour
                 hiddenIngredients.Add(ingredient);
             }
         }
-        // If the gameObject is on scene, get its script
-        pot = GameObject.Find("Pot");
-        if (pot != null)
-        {
-            craftingScript = pot.GetComponent<CraftingAction>();
-        }
+        craftingScript = pot.GetComponent<CraftingAction>();
     }
 
     /// <summary>
