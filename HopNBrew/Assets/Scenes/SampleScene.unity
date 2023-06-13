@@ -3345,6 +3345,7 @@ MonoBehaviour:
   rewardCanvas: {fileID: 1525273918}
   rewardName: {fileID: 1208357991}
   rewardImage: {fileID: 1107124175}
+  pot: {fileID: 1778572715}
 --- !u!1 &1662338187
 GameObject:
   m_ObjectHideFlags: 0
@@ -3690,7 +3691,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.010489941, y: 0.22749656}
+  m_Offset: {x: 0.010489941, y: 0.25347936}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -3701,7 +3702,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1228616, y: 0.4969951}
+  m_Size: {x: 1.1228616, y: 0.5489607}
   m_EdgeRadius: 0
 --- !u!50 &1778572720
 Rigidbody2D:
@@ -4117,7 +4118,6 @@ GameObject:
   - component: {fileID: 2032831956}
   - component: {fileID: 2032831955}
   - component: {fileID: 2032831954}
-  - component: {fileID: 2032831953}
   m_Layer: 0
   m_Name: Pot-cover
   m_TagString: Untagged
@@ -4125,24 +4125,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2032831953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2032831952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6ce43f7538b14fc59ccdfa7fa548506, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  counterText: {fileID: 0}
-  orderText: {fileID: 1618631502}
-  customerServed: 0
-  popUpCanvas: {fileID: 18201134}
-  messageText: {fileID: 1448040346}
-  rewardTrigger: {fileID: 1629835814}
 --- !u!50 &2032831954
 Rigidbody2D:
   serializedVersion: 4
