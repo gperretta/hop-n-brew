@@ -38,6 +38,8 @@ public class NpcMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("stopNpc") && !craftingScript.customerServed)
         {
             moveSpeed = 0; // Stop the movement
+            gameObject.GetComponent<Animator>().speed = 0f; //Stop the animation at the very first frame so the NPC looks still
+            gameObject.GetComponent<Animator>().Play(gameObject.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.name,0,0.0f);
         }
     }
 

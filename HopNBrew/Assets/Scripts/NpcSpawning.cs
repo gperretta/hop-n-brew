@@ -12,6 +12,7 @@ public class NpcSpawning : MonoBehaviour
     public GameObject npcPrefab;
     private GameObject previousNpc;
     public Sprite[] npcSprites;
+    public int spriteRandomResult;
 
     private void Start()
     {
@@ -37,6 +38,7 @@ public class NpcSpawning : MonoBehaviour
         GameObject newNpc = Instantiate(npcPrefab, spawnPosition, transform.rotation);
         newNpc.GetComponent<SpriteRenderer>().sprite = getRandomSprite();
         newNpc.name = getRandomSprite().name;
+        newNpc.GetComponent<Animator>().SetInteger("spriteInt", spriteRandomResult);
         Debug.Log(newNpc.name + " spawned.");
     }
 
@@ -47,6 +49,7 @@ public class NpcSpawning : MonoBehaviour
     Sprite getRandomSprite()
     {
         int randomIndex = Random.Range(0, npcSprites.Length);
+        spriteRandomResult = randomIndex;
         return npcSprites[randomIndex];
     }
 }
