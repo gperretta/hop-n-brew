@@ -56,6 +56,9 @@ public class NpcMovement : MonoBehaviour
         {
             moveSpeed = 1.5f;
             transform.position = transform.position + (Vector3.right * moveSpeed) * Time.deltaTime;
+            gameObject.GetComponent<SpriteRenderer>().flipX = true;
+            gameObject.GetComponent<Animator>().speed = 1f;
+            gameObject.GetComponent<Animator>().Play(gameObject.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.name);
             checkScreenBoundaries();
         }
     }
