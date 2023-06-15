@@ -177,7 +177,7 @@ public class CraftingAction : MonoBehaviour
         if (potionIsRight)
         {
             rewardScript.getReward();
-            if (npcCounter > 5) // FOR DEMO VERSION
+            if (npcCounter > 4) // FOR DEMO VERSION
             {
                 customerServed = true;
             }
