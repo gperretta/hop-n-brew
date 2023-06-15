@@ -10,8 +10,10 @@ public class NpcMovement : MonoBehaviour
 {
     private float moveSpeed = 2;
     private GameObject pot; // use the Pot gameObject 
-    private CraftingAction craftingScript; // to get the script component
+    private CraftingAction craftingScript; 
     private int deathZone = 4;
+    private GameObject tutorialObject; // use to Tutorial Object
+    private StartGame startGameScript; 
 
     private void Start()
     {
@@ -20,6 +22,11 @@ public class NpcMovement : MonoBehaviour
         if (pot != null)
         {
             craftingScript = pot.GetComponent<CraftingAction>();
+        }
+        tutorialObject = GameObject.Find("TutorialObject");
+        if (tutorialObject != null)
+        {
+            startGameScript = tutorialObject.GetComponent<StartGame>();
         }
     }
 
@@ -48,7 +55,7 @@ public class NpcMovement : MonoBehaviour
     /// </summary>
     private void moveNpc()
     {
-        if (!craftingScript.customerServed)
+        if (!craftingScript.customerServed && startGameScript.canStart)
         {
             transform.position = transform.position + (Vector3.left * moveSpeed) * Time.deltaTime;
         }
@@ -58,7 +65,7 @@ public class NpcMovement : MonoBehaviour
             transform.position = transform.position + (Vector3.right * moveSpeed) * Time.deltaTime;
             gameObject.GetComponent<SpriteRenderer>().flipX = true;
             gameObject.GetComponent<Animator>().speed = 1f;
-            gameObject.GetComponent<Animator>().Play(gameObject.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.name);
+            //gameObject.GetComponent<Animator>().Play(gameObject.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.name);
             checkScreenBoundaries();
         }
     }
