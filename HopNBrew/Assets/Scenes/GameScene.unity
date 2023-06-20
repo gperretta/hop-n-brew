@@ -2160,6 +2160,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a691a9b941471462f97b48c144eb486c, type: 3}
   - {fileID: 21300000, guid: 567c71dfc1ce2478181adad12cf638d4, type: 3}
   - {fileID: 21300000, guid: b11bc3a92ce3440e5834669af2bdf7f1, type: 3}
+  - {fileID: 21300000, guid: b11bc3a92ce3440e5834669af2bdf7f1, type: 3}
   spriteRandomResult: 0
 --- !u!4 &1010444376
 Transform:
