@@ -3070,7 +3070,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1429170955
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4389,6 +4389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialCanvas: {fileID: 905162029}
   canStart: 0
+  counterObject: {fileID: 1429170954}
 --- !u!1 &1778572715
 GameObject:
   m_ObjectHideFlags: 0
