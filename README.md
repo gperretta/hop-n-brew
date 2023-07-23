@@ -4,7 +4,7 @@ Hop'n'Brew is an original potion-crafting game set in a whimsical fantasy world,
 </br></br>
 <h3>Table of contents</h3>
 <a href="https://github.com/gperretta/hop-n-brew/blob/main/README.md#gameplay">Gameplay</a></br>
-<a href="https://github.com/gperretta/hop-n-brew/blob/main/README.md#score-and-game-complexity">Game mechanics</a></br>
+<a href="https://github.com/gperretta/hop-n-brew/blob/main/README.md#game-mechanics">Game mechanics</a></br>
 <a href="https://github.com/gperretta/hop-n-brew/blob/main/README.md#technologies-and-softwares">Technologies and softwares</a></br>
 <a href="https://github.com/gperretta/hop-n-brew/blob/main/README.md#visual-and-audio">Visual and audio</a></br>
 <a href="https://github.com/gperretta/hop-n-brew/blob/main/README.md#process-and-contributions">Process and contributions</a></br>
